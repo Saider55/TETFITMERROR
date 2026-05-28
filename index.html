@@ -1,180 +1,78 @@
-<!-- 1. Elegant Trigger Button (Place this where you want the trigger to appear) -->
-<button 
-  id="fitmirror-trigger-btn"
-  type="button"
-  style="
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    padding: 12px 24px;
-    background-color: #4f46e5;
-    color: #ffffff;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    font-size: 13px;
-    font-weight: 700;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.15);
-    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-  "
-  onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 20px rgba(15, 23, 42, 0.24)';"
-  onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 12px rgba(15, 23, 42, 0.15)';"
->
-  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/>
-  </svg>
-  <span>Try It On Safely</span>
-</button>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FitMirror Vercel Store Simulator</title>
+  <!-- Beautiful styling accents -->
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-900 text-white min-h-screen flex items-center justify-center p-6">
 
-<!-- 2. Secured Frame Modal Overlay (Pre-hidden in DOM, loaded on demand) -->
-<div 
-  id="fitmirror-secure-overlay"
-  style="
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(15, 23, 42, 0.45);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    z-index: 2147483646;
-    display: none;
-    align-items: center;
-    justify-content: center;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    padding: 16px;
-    box-sizing: border-box;
-  "
->
-  <style>
-    @media (max-width: 640px) {
-      #fitmirror-secure-container {
-        position: absolute !important;
-        bottom: 0 !important;
-        left: 0 !important;
-        width: 100% !important;
-        height: 100% !important;
-        border-radius: 0 !important;
-        transform: translateY(100%);
-      }
-    }
-  </style>
+  <div class="max-w-md w-full bg-slate-800 rounded-3xl p-6 border border-slate-700/50 shadow-2xl space-y-6">
+    <!-- Active Product Card Header -->
+    <div class="space-y-2">
+      <span class="text-xs font-black text-indigo-400 uppercase tracking-widest bg-indigo-500/10 px-2.5 py-1 rounded-full">AI Live Demonstration</span>
+      <h1 id="product-title" class="text-2xl font-bold tracking-tight">Luxury Designer Hoodie</h1>
+      <p class="text-sm text-slate-400">Interact with the real-time sandboxed try-on window below.</p>
+    </div>
 
-  <!-- Modal Container -->
-  <div 
-    id="fitmirror-secure-container"
-    style="
-      position: relative;
-      width: 100%;
-      max-width: 490px;
-      height: 90%;
-      max-height: 820px;
-      background: #ffffff;
-      border-radius: 28px;
-      overflow: hidden;
-      box-shadow: 0 30px 60px -12px rgba(15, 23, 42, 0.4);
-      display: flex;
-      flex-direction: column;
-      border: 1px solid rgba(15, 23, 42, 0.08);
-      box-sizing: border-box;
-      transition: transform 0.3s ease;
-    "
-  >
-    <!-- Modal Close Button -->
-    <button 
-      id="fitmirror-secure-close"
-      type="button"
-      style="
-        position: absolute;
-        top: 20px;
-        right: 20px;
-        width: 36px;
-        height: 36px;
-        border-radius: 50%;
-        background: rgba(15, 23, 42, 0.06);
-        border: none;
-        color: #1e293b;
-        font-weight: bold;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        z-index: 10;
-        transition: background 0.2s;
-      "
-      onmouseover="this.style.background='rgba(15, 23, 42, 0.1)';"
-      onmouseout="this.style.background='rgba(15, 23, 42, 0.06)';"
-    >
-      ✕
-    </button>
-
-    <!-- Fully Sandboxed Iframe (Only requests the specific interactive endpoint) -->
-    <iframe 
-      id="fitmirror-secure-iframe"
-      src=""
-      sandbox="allow-scripts allow-same-origin allow-forms allow-downloads"
-      style="
-        width: 100%;
-        height: 100%;
-        border: none;
-        background: transparent;
-      "
-    ></iframe>
-  </div>
-</div>
-
-<!-- 3. Safe Click Interaction Script (Local execution only, no external calls) -->
-<script>
-  (function() {
-    const trigger = document.getElementById('fitmirror-trigger-btn');
-    const overlay = document.getElementById('fitmirror-secure-overlay');
-    const container = document.getElementById('fitmirror-secure-container');
-    const iframe = document.getElementById('fitmirror-secure-iframe');
-    const closeBtn = document.getElementById('fitmirror-secure-close');
-
-    if (!trigger || !overlay || !iframe || !closeBtn) return;
-
-    // Use a clean direct preview target URL
-    const PREVIEW_URL = "https://ais-pre-xo5wwmfl5rxl2yh5ngu72o-325634743966.europe-west2.run.app";
-    const appUrl = PREVIEW_URL + "/?embed=true" +
-      "&merchantId=demo-merchant-id" +
-      "&widgetType=pdp" +
-      "&productImage=" + encodeURIComponent("https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=800") +
-      "&productTitle=" + encodeURIComponent("Elegant Cocktail Dress");
-
-    trigger.addEventListener('click', function() {
-      // Lazy load URL on interaction
-      iframe.src = appUrl;
-      overlay.style.display = 'flex';
+    <!-- Product Image Element to update on successful Handshake! -->
+    <div class="aspect-square w-full rounded-2xl overflow-hidden bg-slate-950 relative border border-slate-700">
+      <img id="product-image-display" 
+           src="https://images.unsplash.com/photo-1556911220-e15b29be8c8f?auto=format&fit=crop&w=600&q=80" 
+           alt="Product Image" 
+           class="w-full h-full object-cover transition-all duration-500" />
       
-      setTimeout(function() {
-        overlay.style.opacity = '1';
-        container.style.transform = 'translateY(0) scale(1)';
-      }, 10);
-    });
+      <!-- Handshake Success Badge overlay -->
+      <div id="success-badge" class="hidden absolute top-4 left-4 bg-emerald-500 text-white text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full animate-bounce shadow">
+        ✓ AI Try-On Applied
+      </div>
+    </div>
 
-    const closeHandler = function() {
-      overlay.style.opacity = '0';
-      if (window.innerWidth < 640) {
-        container.style.transform = 'translateY(100%)';
-      } else {
-        container.style.transform = 'translateY(30px) scale(0.95)';
+    <!-- Dynamic Try-On Widget Button Tag -->
+    <div class="space-y-4">
+      <!-- 
+        The integration script tag is loaded dynamically and will find this element. 
+        Note that data-widget-mode is auto-configured to popup to bypass sandbox framing limitations.
+      -->
+      <script 
+        src="https://ais-pre-xo5wwmfl5rxl2yh5ngu72o-325634743966.europe-west2.run.app/widget.js"
+        data-merchant-id="M_DEMO_MERCHANT"
+        data-widget-type="pdp"
+        data-widget-mode="popup"
+        data-product-title="Luxury Designer Hoodie"
+        data-product-image="https://images.unsplash.com/photo-1556911220-e15b29be8c8f?auto=format&fit=crop&w=600&q=80"
+        data-button-text="✨ Try It On Personally"
+        data-primary-color="#6366f1">
+      </script>
+    </div>
+  </div>
+
+  <!-- The Listening Handshake Logic -->
+  <script>
+    // Listen for cross-domain payload handshakes from FitMirror widget popup.
+    window.addEventListener('message', function(event) {
+      console.log("⚡ Received message from popup:", event.data);
+
+      // Check if message is our successful tryon event
+      if (event.data && event.data.type === 'fitmirror-tryon-success') {
+        const generatedImageUrl = event.data.imageUrl;
+        console.log("🏆 Success handshake complete! Custom look image URL:", generatedImageUrl);
+
+        // Update the main store image to the newly generated try-on look!
+        const storeImage = document.getElementById('product-image-display');
+        if (storeImage) {
+          storeImage.src = generatedImageUrl;
+        }
+
+        // Show the success badge
+        const badge = document.getElementById('success-badge');
+        if (badge) {
+          badge.classList.remove('hidden');
+        }
       }
-      setTimeout(function() {
-        overlay.style.display = 'none';
-        iframe.src = ''; // Unload resource dynamically to save memory
-      }, 300);
-    };
-
-    closeBtn.addEventListener('click', closeHandler);
-    overlay.addEventListener('click', function(e) {
-      if (e.target === overlay) closeHandler();
     });
-  })();
-</script>
+  </script>
+</body>
+</html>
