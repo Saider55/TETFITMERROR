@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Your External Storefront - Real Try-On Integration Test</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after {
       box-sizing: border-box;
@@ -76,7 +76,7 @@
     .status-indicator {
       font-size: 0.75rem;
       color: #10b981;
-      font-family: monospace;
+      font-family: 'JetBrains Mono', monospace;
       font-weight: 600;
     }
     .product-grid {
@@ -184,9 +184,9 @@
     <div class="header-row">
       <div class="header-logo">
         <span class="brand-title">AVANT-GARDE CLOTHING CO.</span>
-        <span class="sandbox-badge">Vercel Sandbox</span>
+        <span class="sandbox-badge">Live Store Integration</span>
       </div>
-      <div class="status-indicator">Status: Connected to Server</div>
+      <div class="status-indicator">Status: Connected</div>
     </div>
 
     <!-- Product Grid -->
@@ -200,12 +200,12 @@
       <div class="details-wrapper">
         <div class="rating-group">
           <div class="stars">★★★★★ 4.9 BESTSELLER</div>
-          <h1 class="main-title">pppppppp </h1>
+          <h1 class="main-title">Classic Vintage Denim Jacket</h1>
           <div class="price-tag">$120.00</div>
         </div>
 
         <p class="description-text">
-          This is a direct simulation of how the widget integration acts on a real-world Shopify storefront, headless React app, custom build, or CMS site.
+          This is a live trial of the widget integration running on an external, production-ready environment.
         </p>
 
         <!-- Dynamic Buy form that provides target mounting context -->
@@ -221,17 +221,17 @@
   <div class="footer-block">
     <p class="footer-title">Powered by FitMirror AI Intelligent Live Canvas</p>
     <p class="footer-text">
-      Simply save this document onto your desktop, modify it, or inspect the source. Double clicking it loaded it securely as a local client.
+      Simply load this page in any browser or device. The widget script fetches and builds the interface dynamically.
     </p>
   </div>
 
-  <!-- Real Integration Script Tag using the unauthenticated Preview URL -->
+  <!-- ✅ FIXED: Points directly to the credentials-free Public Preview URL -->
   <script 
     src="https://ais-pre-xo5wwmfl5rxl2yh5ngu72o-325634743966.europe-west2.run.app/widget.js" 
     data-merchant-id="M_837492" 
     data-widget-type="pdp" 
     data-product-image="https://images.unsplash.com/photo-1591047139829-d91aecb6caea?auto=format&fit=crop&q=80&w=800" 
-    data-product-title="Classic Vintage Denim Jacket">
-  </script>
+    data-product-title="Classic Vintage Denim Jacket"
+  ></script>
 </body>
 </html>
