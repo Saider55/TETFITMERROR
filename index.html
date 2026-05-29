@@ -46,6 +46,36 @@
   data-primary-color="#4f46e5"
   async>
 </script>
+      <button 
+  id="fitmirror-manual-loader-btn" 
+  onclick="(function() {
+    console.log('🔄 Manual Loader Clicked. Checking document state...');
+    if (document.getElementById('fitmirror-widget-button')) {
+      alert('FitMirror widget button is already on the page! Look for Triggers or Debugger HUD in the bottom corner.');
+      return;
+    }
+    var s = document.createElement('script');
+    s.src = 'https://ais-pre-xo5wwmfl5rxl2yh5ngu72o-325634743966.europe-west2.run.app/widget.js';
+    s.setAttribute('data-merchant-id', 'M_837492');
+    s.setAttribute('data-widget-type', 'pdp');
+    s.setAttribute('data-product-image', 'YOUR_PRODUCT_IMAGE_URL');
+    s.setAttribute('data-product-title', 'YOUR_PRODUCT_TITLE');
+    s.onload = function() {
+      console.log('✅ FitMirror Script loaded and compiled successfully!');
+      alert('FitMirror loaded successfully! Look for the Virtual Try-On trigger button on the page.');
+    };
+    s.onerror = function() {
+      console.error('❌ Failed to download script from the server check secure URL context:' + s.src);
+      alert('Connection block or failure to connect to FitMirror script server! Verify your override host or check dev console logs.');
+    };
+    document.body.appendChild(s);
+  })()" 
+  style="padding: 14px 28px; font-family: sans-serif; font-size: 13px; font-weight: bold; background: #4f46e5; color: #fff; border: none; border-radius: 12px; cursor: pointer; box-shadow: 0 4px 14px rgba(79,70,229,0.35); text-transform: uppercase; letter-spacing: 0.05em; transition: transform 0.2s;"
+  onmouseenter="this.style.transform='scale(1.02)'"
+  onmouseleave="this.style.transform='scale(1)'"
+>
+  ⚡ Load FitMirror Try-On
+</button>
 
   <!-- The Listening Handshake Logic -->
   <script>
