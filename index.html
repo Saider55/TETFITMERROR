@@ -3,105 +3,185 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FitMirror Vercel Store Simulator</title>
-  <!-- Beautiful styling accents -->
+  <title>AURA ATELIER — Virtual Try-On Preview</title>
+  
+  <!-- Premium Typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono&display=swap" rel="stylesheet">
+  
+  <!-- High Contrast Styled Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            serif: ['"Playfair Display"', 'serif'],
+            sans: ['"Outfit"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          }
+        }
+      }
+    }
+  </script>
 </head>
-<body class="bg-slate-900 text-white min-h-screen flex items-center justify-center p-6">
+<body class="bg-stone-50 text-stone-950 font-sans min-h-screen flex flex-col antialiased">
 
-  <div class="max-w-md w-full bg-slate-800 rounded-3xl p-6 border border-slate-700/50 shadow-2xl space-y-6">
-    <!-- Active Product Card Header -->
-    <div class="space-y-2">
-      <span class="text-xs font-black text-indigo-400 uppercase tracking-widest bg-indigo-500/10 px-2.5 py-1 rounded-full">AI Live Demonstration</span>
-      <h1 id="product-title" class="text-2xl font-bold tracking-tight">Luxury Designer Hoodie</h1>
-      <p class="text-sm text-slate-400">Interact with the real-time sandboxed try-on window below.</p>
+  <!-- Header Section -->
+  <header class="border-b border-stone-200/80 bg-stone-50/80 backdrop-blur-md sticky top-0 z-40 transition-all duration-300">
+    <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <span class="text-xs font-bold uppercase tracking-[0.2em] text-stone-500">EXPERIENCE CENTER</span>
+      </div>
+      <div>
+        <h1 class="font-serif italic text-3xl tracking-wide text-stone-900 pointer-events-none">Aura Atelier</h1>
+      </div>
+      <div class="flex items-center gap-4">
+        <span class="h-2 w-2 rounded-full bg-emerald-500 animate-pulse"></span>
+        <span class="text-[10px] font-mono font-bold tracking-widest text-stone-600 uppercase">Vercel Client Active</span>
+      </div>
     </div>
+  </header>
 
-    <!-- Product Image Element to update on successful Handshake! -->
-    <div class="aspect-square w-full rounded-2xl overflow-hidden bg-slate-950 relative border border-slate-700">
-      <img id="product-image-display" 
-           src="https://images.unsplash.com/photo-1556911220-e15b29be8c8f?auto=format&fit=crop&w=600&q=80" 
-           alt="Product Image" 
-           class="w-full h-full object-cover transition-all duration-500" />
+  <!-- Product Showcase & Sandbox Try-On -->
+  <main class="flex-1 max-w-7xl mx-auto px-6 py-12 md:py-20 w-full grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+    
+    <!-- Hero Product Media Center -->
+    <div class="col-span-1 lg:col-span-6 space-y-6">
+      <div class="aspect-[4/5] bg-stone-100 rounded-3xl overflow-hidden relative border border-stone-200/60 shadow-inner group">
+        <img 
+          id="product-hero-image" 
+          src="https://images.unsplash.com/photo-1591047139829-d91aecb6caea?auto=format&fit=crop&q=80&w=1200" 
+          alt="Classic Vintage Denim Jacket" 
+          class="w-full h-full object-cover transition-all duration-700 ease-out group-hover:scale-105"
+        />
+        <div class="absolute top-4 left-4 bg-stone-900/95 backdrop-blur-md text-white text-[10px] font-bold uppercase tracking-widest px-3.5 py-1.5 rounded-full border border-white/10">
+          Selected Apparel
+        </div>
+      </div>
       
-      <!-- Handshake Success Badge overlay -->
-      <div id="success-badge" class="hidden absolute top-4 left-4 bg-emerald-500 text-white text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full animate-bounce shadow">
-        ✓ AI Try-On Applied
+      <!-- Live Demo Return Prompt HUD -->
+      <div id="tryon-success-alert" class="hidden bg-emerald-50 border border-emerald-200/60 rounded-2xl p-4 flex gap-3 items-start transition-all">
+        <span class="text-emerald-600 text-lg">✨</span>
+        <div class="flex-1 space-y-1">
+          <h4 class="text-xs font-bold text-emerald-950 uppercase tracking-widest">Mirror Results Applied!</h4>
+          <p class="text-[11px] text-stone-600 leading-relaxed font-semibold">Your generated AI fitting model is now rendered in place of the default hero thumbnail.</p>
+          <button onclick="resetHeroImage()" class="text-[10px] text-emerald-700 underline font-extrabold hover:text-stone-950 uppercase tracking-wider block mt-2">
+            Reset to Original Display
+          </button>
+        </div>
       </div>
     </div>
 
-    <!-- Dynamic Try-On Widget Button Tag -->
-    <div class="space-y-4">
-      <!-- 
-        The integration script tag is loaded dynamically and will find this element. 
-        Note that data-widget-mode is auto-configured to popup to bypass sandbox framing limitations.
-      -->
-<script 
-  src="https://ais-pre-xo5wwmfl5rxl2yh5ngu72o-325634743966.europe-west2.run.app/widget.js" 
-  data-merchant-id="M_837492"
-  data-widget-type="pdp"
-  data-widget-mode="popup"
-  data-product-image="CURRENT_PRODUCT_IMAGE_URL"
-  data-product-title="CURRENT_PRODUCT_TITLE"
-  data-primary-color="#4f46e5"
-  async>
-</script>
-  <button 
-  id="fitmirror-manual-loader-btn" 
-  onclick="(function() {
-    console.log('🔄 Manual Loader Clicked. Checking document state...');
-    if (document.getElementById('fitmirror-widget-button')) {
-      alert('FitMirror widget button is already on the page! Look for Triggers or Debugger HUD in the bottom corner.');
-      return;
-    }
-    var s = document.createElement('script');
-    var isApp = window.location.hostname.includes('run.app') || window.location.hostname.includes('localhost') || window.location.hostname.includes('google.com');
-    s.src = isApp ? (window.location.origin + '/widget.js') : 'https://ais-pre-xo5wwmfl5rxl2yh5ngu72o-325634743966.europe-west2.run.app/widget.js';
-    s.setAttribute('data-merchant-id', 'M_837492');
-    s.setAttribute('data-widget-type', 'pdp');
-    s.setAttribute('data-product-image', 'YOUR_PRODUCT_IMAGE_URL');
-    s.setAttribute('data-product-title', 'YOUR_PRODUCT_TITLE');
-    s.onload = function() {
-      console.log('✅ FitMirror Script loaded and compiled successfully!');
-      alert('FitMirror loaded successfully! Look for the Virtual Try-On trigger button on the page.');
-    };
-    s.onerror = function() {
-      console.error('❌ Failed to download script from the server check secure URL context:' + s.src);
-      alert('Connection block or failure to connect to FitMirror script server! Verify your override host or check dev console logs.');
-    };
-    document.body.appendChild(s);
-  })()" 
-  style="padding: 14px 28px; font-family: sans-serif; font-size: 13px; font-weight: bold; background: #4f46e5; color: #fff; border: none; border-radius: 12px; cursor: pointer; box-shadow: 0 4px 14px rgba(79,70,229,0.35); text-transform: uppercase; letter-spacing: 0.05em; transition: transform 0.2s;"
-  onmouseenter="this.style.transform='scale(1.02)'"
-  onmouseleave="this.style.transform='scale(1)'"
->
-  ⚡ Load FitMirror Try-On
-</button>
+    <!-- Shop Specs & Integration -->
+    <div class="col-span-1 lg:col-span-6 space-y-8 lg:sticky lg:top-28">
+      <div class="space-y-4 border-b border-stone-200 pb-8">
+        <p class="text-xs font-bold uppercase tracking-[0.25em] text-indigo-600">Premium Outerwear Collection</p>
+        <h2 class="font-serif text-4xl lg:text-5xl tracking-tight text-stone-900 font-bold" id="product-title-display">
+          Classic Vintage Denim Jacket
+        </h2>
+        <div class="flex items-center gap-4">
+          <span class="text-xl font-bold font-mono text-stone-850">$185.00</span>
+          <span class="text-[10px] font-black uppercase tracking-wider bg-stone-100 text-stone-500 rounded px-2 py-1">In Stock</span>
+        </div>
+      </div>
 
-  <!-- The Listening Handshake Logic -->
+      <!-- Live Virtual Try On Placement -->
+      <div class="space-y-4" id="placement-widget-target">
+        <p class="text-xs font-bold text-stone-400 uppercase tracking-wider">Interactive Brand Fitting Target</p>
+        
+        <!-- The Integration Script placeholder parses parameters and mounts the trigger here -->
+        <div class="p-0.5 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-2xl shadow-lg transition-transform hover:scale-[1.01] overflow-hidden">
+          <div id="mirror-button-container" class="bg-white p-5 rounded-[14px]">
+            <!-- FALLBACK WIDGET TRIGGER EMBED POINT -->
+            <!-- The script automatically identifies and mounts the launcher button here -->
+            <p class="text-[10px] text-stone-400 font-semibold mb-2">Connecting to safe FitMirror host...</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Demo Store Specs Details -->
+      <div class="p-6 bg-stone-100/60 rounded-2xl border border-stone-200/50 space-y-4">
+        <h3 class="font-bold text-xs uppercase tracking-widest text-stone-800">Merchant Client Capabilities</h3>
+        <ul class="space-y-2.5 text-xs text-stone-600 font-semibold leading-relaxed">
+          <li class="flex items-center gap-2.5">
+            <span class="text-indigo-500 text-sm">✦</span>
+            <span>No CORS issues inside hosted browser scopes.</span>
+          </li>
+          <li class="flex items-center gap-2.5">
+            <span class="text-indigo-500 text-sm">✦</span>
+            <span>Includes seamless parameter return parsing to display AI model previews.</span>
+          </li>
+          <li class="flex items-center gap-2.5">
+            <span class="text-indigo-500 text-sm">✦</span>
+            <span>Fully custom brand fonts, matching colors and responsive layouts.</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </main>
+
+  <!-- Static Footer -->
+  <footer class="border-t border-stone-200 py-12 bg-stone-100">
+    <div class="max-w-7xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-6 text-[11px] font-mono text-stone-500 font-semibold">
+      <span>© 2026 AURA ATELIER INC.</span>
+      <span>INTEGRATION SANDBOX ENVIRONMENT — VERCEL TRIAL</span>
+    </div>
+  </footer>
+
+  <!-- ========================================================== -->
+  <!-- 🚀 INTEGRATION SCRIPTS (Configured with your Shared API Host) -->
+  <!-- ========================================================== -->
+
+  <!-- Script to Handle URL Parameter Try-On Results -->
   <script>
-    // Listen for cross-domain payload handshakes from FitMirror widget popup.
-    window.addEventListener('message', function(event) {
-      console.log("⚡ Received message from popup:", event.data);
+    const ORIGINAL_IMAGE_URL = "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?auto=format&fit=crop&q=80&w=1200";
 
-      // Check if message is our successful tryon event
-      if (event.data && event.data.type === 'fitmirror-tryon-success') {
-        const generatedImageUrl = event.data.imageUrl;
-        console.log("🏆 Success handshake complete! Custom look image URL:", generatedImageUrl);
-
-        // Update the main store image to the newly generated try-on look!
-        const storeImage = document.getElementById('product-image-display');
-        if (storeImage) {
-          storeImage.src = generatedImageUrl;
+    (function parseTryOnResults() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const resultImage = urlParams.get('tryon_result');
+      
+      if (resultImage) {
+        // Find and replace the hero image preview source
+        const heroImg = document.getElementById('product-hero-image');
+        if (heroImg) {
+          heroImg.src = decodeURIComponent(resultImage);
+        }
+        
+        // Show the elegant completion banner
+        const successAlert = document.getElementById('tryon-success-alert');
+        if (successAlert) {
+          successAlert.classList.remove('hidden');
         }
 
-        // Show the success badge
-        const badge = document.getElementById('success-badge');
-        if (badge) {
-          badge.classList.remove('hidden');
-        }
+        // Clean up URL parameters beautifully to maintain brand prestige without page reloads
+        const cleanUrl = window.location.pathname + window.location.hash;
+        window.history.replaceState({}, '', cleanUrl);
       }
-    });
+    })();
+
+    function resetHeroImage() {
+      const heroImg = document.getElementById('product-hero-image');
+      if (heroImg) {
+        heroImg.src = ORIGINAL_IMAGE_URL;
+      }
+      document.getElementById('tryon-success-alert').classList.add('hidden');
+    }
   </script>
+
+  <!-- Load the FitMirror Widget Loader Client Script -->
+  <script 
+    src="https://ais-pre-xo5wwmfl5rxl2yh5ngu72o-325634743966.europe-west2.run.app/widget.js" 
+    data-merchant-id="aura_atelier_vercel_68" 
+    data-widget-type="pdp" 
+    data-widget-mode="redirect"
+    data-primary-color="#4f46e5"
+    data-button-text="⚡ Virtual Try-On"
+    data-font-family="Outfit"
+    data-product-image="https://images.unsplash.com/photo-1591047139829-d91aecb6caea?auto=format&fit=crop&q=80&w=1200" 
+    data-product-title="Classic Vintage Denim Jacket"
+  ></script>
+
 </body>
 </html>
