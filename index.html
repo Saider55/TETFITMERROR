@@ -46,7 +46,7 @@
   data-primary-color="#4f46e5"
   async>
 </script>
-      <button 
+  <button 
   id="fitmirror-manual-loader-btn" 
   onclick="(function() {
     console.log('🔄 Manual Loader Clicked. Checking document state...');
@@ -55,7 +55,8 @@
       return;
     }
     var s = document.createElement('script');
-    s.src = 'https://ais-pre-xo5wwmfl5rxl2yh5ngu72o-325634743966.europe-west2.run.app/widget.js';
+    var isApp = window.location.hostname.includes('run.app') || window.location.hostname.includes('localhost') || window.location.hostname.includes('google.com');
+    s.src = isApp ? (window.location.origin + '/widget.js') : 'https://ais-pre-xo5wwmfl5rxl2yh5ngu72o-325634743966.europe-west2.run.app/widget.js';
     s.setAttribute('data-merchant-id', 'M_837492');
     s.setAttribute('data-widget-type', 'pdp');
     s.setAttribute('data-product-image', 'YOUR_PRODUCT_IMAGE_URL');
