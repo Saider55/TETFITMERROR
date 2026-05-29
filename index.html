@@ -36,36 +36,14 @@
         The integration script tag is loaded dynamically and will find this element. 
         Note that data-widget-mode is auto-configured to popup to bypass sandbox framing limitations.
       -->
-<script>
-  window.addEventListener('message', function(event) {
-    if (event.data && event.data.type === 'fitmirror-tryon-success') {
-      console.log("🎉 FitMirror try-on succeed! Swapping product images with:", event.data.imageUrl);
-      
-      // Selectors matching typical Webflow, Vercel SPA, Shopify, and HTML templates
-      const imageSelectors = [
-        'img.product-img',
-        'img#product-featured-image',
-        '.product-single__photo img',
-        'main img[src*="clothing"]',
-        '#pdp-primary-image' 
-      ];
-      
-      imageSelectors.forEach(function(selector) {
-        const els = document.querySelectorAll(selector);
-        els.forEach(function(el) {
-          el.style.opacity = '0';
-          setTimeout(function() {
-            el.src = event.data.imageUrl;
-            el.style.transition = "all 0.6s cubic-bezier(0.16, 1, 0.3, 1)";
-            el.style.opacity = '1';
-            el.style.transform = 'scale(1.05)';
-            setTimeout(function() { el.style.transform = 'scale(1)'; }, 600);
-          }, 300);
-        });
-      });
-    }
-  });
-</script>
+<script 
+  src="https://ais-pre-xo5wwmfl5rxl2yh5ngu72o-325634743966.europe-west2.run.app/widget.js" 
+  data-merchant-id="M_837492"
+  data-widget-type="pdp"
+  data-widget-mode="redirect"
+  data-product-image="https://your-store.com/path-to-garment-image.png"
+  data-product-title="Black Silk Evening Gown"
+></script>
 
   <!-- The Listening Handshake Logic -->
   <script>
